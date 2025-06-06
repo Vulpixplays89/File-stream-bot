@@ -1,8 +1,7 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Hypo Player</title>
+  <title>NOOB Player</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-Frame-Options" content="deny" />
@@ -44,11 +43,30 @@
       align-items: center;
     }
 
-    #stream-media {
+    .video-wrapper {
       width: 90%;
       max-width: 960px;
-      border-radius: 10px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
       box-shadow: 0 0 20px rgba(0,255,255,0.15), 0 0 40px rgba(255,0,80,0.08);
+    }
+
+    .aspect-landscape {
+      padding-top: 56.25%; /* 16:9 */
+    }
+
+    .aspect-portrait {
+      padding-top: 177.77%; /* 9:16 */
+    }
+
+    .video-wrapper video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
     }
 
     .plyr--video .plyr__controls {
@@ -80,8 +98,10 @@
       text-align: center;
       line-height: 40px;
       font-size: 16px;
+      cursor: pointer;
       box-shadow: 0 0 8px transparent;
       transition: 0.3s ease;
+      z-index: 10;
     }
 
     .plyr-download-button {
@@ -125,20 +145,24 @@
 <body>
   <center>
     <div class="title-container">
-      <h1>Hypo Player</h1>
+      <h1>NOOB PLAYER</h1>
     </div>
 
-    <video id="stream-media" controls preload="auto">
-      <source src="" type="">
-      <p class="vjs-no-js">
-        To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video.
-      </p>
-    </video>
+    <div id="video-container" class="video-wrapper">
+      <video id="stream-media" controls preload="auto">
+        <source src="" type="">
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video.
+        </p>
+      </video>
+    </div>
 
     <div id="error-message"></div>
   </center>
 
   <script>
+    const mediaLink = "{{ mediaLink }}"; // Inject your media URL here
+
     const player = new Plyr('#stream-media', {
       controls: ['play-large', 'rewind', 'play', 'fast-forward', 'progress', 'current-time', 'mute', 'settings', 'pip', 'fullscreen'],
       settings: ['speed', 'loop'],
@@ -147,34 +171,55 @@
       keyboard: { focused: true, global: true },
     });
 
-    const mediaLink = "{{ mediaLink }}"; // Replace with your server logic
+    const video = document.getElementById('stream-media');
+    const container = document.getElementById('video-container');
 
     if (mediaLink) {
       document.querySelector('#stream-media source').setAttribute('src', mediaLink);
-      player.restart();
+      video.load();
 
-      const downloadButton = document.createElement('div');
-      downloadButton.className = 'plyr-download-button';
-      downloadButton.onclick = (event) => {
-        event.stopPropagation();
-        const link = document.createElement('a');
-        link.href = mediaLink;
-        link.download = 'video.mp4';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      };
-      player.elements.container.querySelector('.plyr__video-wrapper').appendChild(downloadButton);
+      video.addEventListener('loadedmetadata', () => {
+        const ratio = video.videoWidth / video.videoHeight;
+        container.classList.remove('aspect-landscape', 'aspect-portrait');
 
-      const shareButton = document.createElement('div');
-      shareButton.className = 'plyr-share-button';
-      shareButton.onclick = (event) => {
-        event.stopPropagation();
-        if (navigator.share) {
-          navigator.share({ title: "Play", url: mediaLink });
+        if (ratio > 1) {
+          container.classList.add('aspect-landscape'); // 16:9
+        } else {
+          container.classList.add('aspect-portrait'); // 9:16
         }
-      };
-      player.elements.container.querySelector('.plyr__video-wrapper').appendChild(shareButton);
+
+        // Add Download Button
+        const downloadButton = document.createElement('div');
+        downloadButton.className = 'plyr-download-button';
+        downloadButton.onclick = function (event) {
+          event.stopPropagation();
+          const link = document.createElement('a');
+          link.href = mediaLink;
+          link.download = 'video.mp4';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        };
+
+        // Add Share Button
+        const shareButton = document.createElement('div');
+        shareButton.className = 'plyr-share-button';
+        shareButton.onclick = function (event) {
+          event.stopPropagation();
+          if (navigator.share) {
+            navigator.share({
+              title: "Watch this video",
+              url: mediaLink
+            }).catch(err => alert("Sharing failed: " + err));
+          } else {
+            alert("Sharing not supported in this browser.");
+          }
+        };
+
+        const wrapper = player.elements.container.querySelector('.plyr__video-wrapper');
+        wrapper.appendChild(downloadButton);
+        wrapper.appendChild(shareButton);
+      });
     } else {
       document.getElementById('error-message').textContent = 'Error: Media URL not provided';
     }
