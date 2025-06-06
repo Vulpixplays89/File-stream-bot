@@ -1,160 +1,183 @@
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Hyponet Player</title>
+<head>
+  <title>Hypo Player</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-Frame-Options" content="deny" />
+  <meta name="author" content="WOODcraft SudoR2spr" />
+  <meta name="description" content="WDzone Video Downloader" />
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-Frame-Options" content="deny">
-	<meta name="author" content="WOODcraft SudoR2spr" />
-    <meta name="keywords" content="WDzone, WDZONE, play Downloader" />
-    <meta name="description" content="WDzone Website Service Downloader Video Social Media." />
-    <meta property="og:description" content="WDzone Website Service Downloader Video play.">	
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-	<link rel="icon" type="image/x-icon" href="https://i.ibb.co/3Mp3Bg9/dl-logo.png" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="icon" href="https://i.ibb.co/3Mp3Bg9/dl-logo.png" type="image/x-icon" />
+  <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
 
-    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
-    <style>
-      html, body {
-        margin: 0;
-        height: 100%;
-      }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #0e0e10;
+      font-family: 'Orbitron', sans-serif;
+      color: #ccc;
+    }
 
-      #stream-media {
-        height: 100%;
-        width: 100%;
-      }
+    .title-container {
+      text-align: center;
+      padding: 20px 0 10px;
+    }
 
-      #error-message {
-        color: red;
-        font-size: 24px;
-        text-align: center;
-        margin-top: 20px;
-      }
+    h1 {
+      color: #0ff;
+      font-size: 24px;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px #0ff;
+    }
 
-      .plyr__video-wrapper .plyr-download-button{
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        width: 30px;
-        height: 30px;
-        background-color: rgba(0, 0, 0, 0.7);
-        border-radius: 50%;
-        text-align: center;
-        line-height: 30px;
-        color: white;
-        z-index: 10;
-      }
+    center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-      .plyr__volume {
-        max-width: initial;
-        min-width: initial;
-        width: auto;
-        position: relative;
-      }
+    #stream-media {
+      width: 90%;
+      max-width: 960px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,255,255,0.15), 0 0 40px rgba(255,0,80,0.08);
+    }
 
+    .plyr--video .plyr__controls {
+      background-color: rgba(20, 20, 25, 0.8);
+      border-top: 1px solid #111;
+    }
 
-      .plyr__video-wrapper .plyr-share-button{
-        position: absolute;
-        top: 50px;
-        left: 10px;
-        width: 30px;
-        height: 30px;
-        background-color: rgba(0, 0, 0, 0.7);
-        border-radius: 50%;
-        text-align: center;
-        line-height: 30px;
-        color: white;
-        z-index: 10;
-      }
+    .plyr__control {
+      background-color: #1a1a1f;
+      color: #ccc;
+      border: none;
+      transition: all 0.2s ease;
+    }
 
-      .plyr__video-wrapper .plyr-download-button:hover,
-      .plyr__video-wrapper .plyr-share-button:hover{
-        background-color: rgba(255, 255, 255, 0.7);
-        color: black;
-      }
+    .plyr__control:hover {
+      background-color: #0ff;
+      color: #111;
+      box-shadow: 0 0 10px #0ff;
+    }
 
-      .plyr__video-wrapper .plyr-download-button:before {
-        font-family: "Font Awesome 5 Free";
-        content: "\f019";
-        font-weight: bold;
-      }
+    .plyr__video-wrapper .plyr-download-button,
+    .plyr__video-wrapper .plyr-share-button {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background-color: #1a1a1f;
+      color: #0ff;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 40px;
+      font-size: 16px;
+      box-shadow: 0 0 8px transparent;
+      transition: 0.3s ease;
+    }
 
-      .plyr__video-wrapper .plyr-share-button:before {
-        font-family: "Font Awesome 5 Free";
-        content: "\f064";
-        font-weight: bold;
-      }
+    .plyr-download-button {
+      top: 10px;
+      left: 10px;
+    }
 
-      .plyr, .plyr__video-wrapper, .plyr__video-embed iframe {
-        height: 100%;
-      }
+    .plyr-share-button {
+      top: 60px;
+      left: 10px;
+    }
 
-    </style>
-  </head>
+    .plyr-download-button:hover,
+    .plyr-share-button:hover {
+      background-color: #0ff;
+      color: #111;
+      box-shadow: 0 0 10px #0ff;
+    }
 
-  <body>
-     <center><div class="title-container">
-        <h1 class="font-bold" style="color:blue;" >Hypo Player</h1>
-     </div>
+    .plyr-download-button:before {
+      font-family: "Font Awesome 5 Free";
+      content: "\f019";
+      font-weight: 900;
+    }
+
+    .plyr-share-button:before {
+      font-family: "Font Awesome 5 Free";
+      content: "\f064";
+      font-weight: 900;
+    }
+
+    #error-message {
+      color: #f55;
+      font-size: 18px;
+      text-shadow: 0 0 5px #f55;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <center>
+    <div class="title-container">
+      <h1>Hypo Player</h1>
+    </div>
+
     <video id="stream-media" controls preload="auto">
       <source src="" type="">
       <p class="vjs-no-js">
-        To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+        To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video.
       </p>
     </video>
 
     <div id="error-message"></div>
-    <script>
-      var player = new Plyr('#stream-media', {
-          controls:['play-large', 'rewind', 'play', 'fast-forward', 'progress', 'current-time', 'mute', 'settings', 'pip', 'fullscreen'],
-          settings:['speed','loop'],
-          speed:{selected:1,options:[0.25,0.5,0.75,1,1.25,1.5,1.75,2]},
-          seek: 10,
-          keyboard: { focused: true, global: true },
-      });
+  </center>
 
-      var mediaLink = "{{ mediaLink }}";
+  <script>
+    const player = new Plyr('#stream-media', {
+      controls: ['play-large', 'rewind', 'play', 'fast-forward', 'progress', 'current-time', 'mute', 'settings', 'pip', 'fullscreen'],
+      settings: ['speed', 'loop'],
+      speed: { selected: 1, options: [0.5, 1, 1.5, 2] },
+      seek: 10,
+      keyboard: { focused: true, global: true },
+    });
 
-      if (mediaLink) {
-          document.querySelector('#stream-media source').setAttribute('src', mediaLink);
-          player.restart();
+    const mediaLink = "{{ mediaLink }}"; // Replace with your server logic
 
-          var downloadButton = document.createElement('div');
-          downloadButton.className = 'plyr-download-button';
+    if (mediaLink) {
+      document.querySelector('#stream-media source').setAttribute('src', mediaLink);
+      player.restart();
 
-          downloadButton.onclick = function() {
-            event.stopPropagation();
-            var link = document.createElement('a');
-            link.href = mediaLink;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-          };
+      const downloadButton = document.createElement('div');
+      downloadButton.className = 'plyr-download-button';
+      downloadButton.onclick = (event) => {
+        event.stopPropagation();
+        const link = document.createElement('a');
+        link.href = mediaLink;
+        link.download = 'video.mp4';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
+      player.elements.container.querySelector('.plyr__video-wrapper').appendChild(downloadButton);
 
-          player.elements.container.querySelector('.plyr__video-wrapper').appendChild(downloadButton);
-
-          var shareButton = document.createElement('div');
-          shareButton.className = 'plyr-share-button';
-
-          shareButton.onclick = function() {
-            event.stopPropagation();
-            if (navigator.share) {
-              navigator.share({
-                title: "Play",
-                url: mediaLink
-              });
-            }
-          };
-
-          player.elements.container.querySelector('.plyr__video-wrapper').appendChild(shareButton);
-
-      } else {
-          document.getElementById('error-message').textContent = 'Error: Media URL not provided';
-      }
-    </script>
-
-  </body>
+      const shareButton = document.createElement('div');
+      shareButton.className = 'plyr-share-button';
+      shareButton.onclick = (event) => {
+        event.stopPropagation();
+        if (navigator.share) {
+          navigator.share({ title: "Play", url: mediaLink });
+        }
+      };
+      player.elements.container.querySelector('.plyr__video-wrapper').appendChild(shareButton);
+    } else {
+      document.getElementById('error-message').textContent = 'Error: Media URL not provided';
+    }
+  </script>
+</body>
 </html>
