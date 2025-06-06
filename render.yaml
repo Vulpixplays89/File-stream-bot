@@ -1,0 +1,4 @@
+services:
+  - name: "api"
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python -m bot"
