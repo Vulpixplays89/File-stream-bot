@@ -27,7 +27,7 @@ LOGGER_CONFIG_JSON = {
     'handlers': {
         'file_handler': {
             'class': 'logging.FileHandler',
-            'filename': '/tmp/event-log.txt',
+            'filename': 'event-log.txt',
             'formatter': 'default'
         },
         'stream_handler': {
