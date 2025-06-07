@@ -5,13 +5,13 @@ class Telegram:
     API_HASH = env.get("TELEGRAM_API_HASH", "9f70e2ce80e3676b56265d4510561aef")
     OWNER_ID = int(env.get("OWNER_ID", "6897739611"))
     ALLOWED_USER_IDS = env.get("ALLOWED_USER_IDS", "").split()
-    BOT_USERNAME = env.get("TELEGRAM_BOT_USERNAME", "file_stream_tgbot")
+    BOT_USERNAME = env.get("TELEGRAM_BOT_USERNAME", "HHTGFilezDLBot")
     BOT_TOKEN = env.get("TELEGRAM_BOT_TOKEN", "7770146776:AAFSErbU9pVjfeNcSiMRp0BLCJcxa-EsIWs")
     CHANNEL_ID = int(env.get("TELEGRAM_CHANNEL_ID", "-1002389759470"))
     SECRET_CODE_LENGTH = int(env.get("SECRET_CODE_LENGTH", 4))
 
 class Server:
-    BASE_URL = env.get("BASE_URL", "https://e8f116c3-c5a4-4911-99af-daf29b2bb70a.e1-us-east-azure.choreoapps.dev")
+    BASE_URL = env.get("BASE_URL", "https://filestr-bot-09bc2a39ec69.herokuapp.com")
     BIND_ADDRESS = env.get("BIND_ADDRESS", "0.0.0.0")
     PORT = int(env.get("PORT", 3000))
 
