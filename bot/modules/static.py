@@ -1,8 +1,8 @@
 WelcomeText = \
 """
-Hɪ! **%(first_name)s** Tʜɪs Is A Tᴇʟᴇɢʀᴀᴍ Fɪʟᴇ (Dᴏᴄᴜᴍᴇɴᴛs, Vɪᴅᴇᴏ, Aᴜᴅɪᴏ, Pʜᴏᴛᴏ, Eᴛᴄ.) Tᴏ Dɪʀᴇᴄᴛ Hɪɢʜ Sᴘᴇᴇᴅ Dᴏᴡɴʟᴏᴀᴅ Lɪɴᴋ Gᴇɴᴇʀᴀᴛᴏʀ Bᴏᴛ.
+Hii! **%(first_name)s** Send Me A File To Get Its Fast Download Link Or Send Me Video To Get Streaming Link Of That Video Without Downloading.
 
-Nᴏᴛᴇ: Dᴏɴ'ᴛ Fᴏʀᴡᴀʀᴅ Pᴏʀɴ Fɪʟᴇs Tᴏ Mᴇ, Yᴏᴜ Wɪʟʟ Gᴇᴛ Pᴇʀᴍᴀɴᴇɴᴛ Bᴀɴ.
+No Limits 📈 Share Any Content You Want No Ban🗿.
 """
 
 UserInfoText = \
