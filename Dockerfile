@@ -1,26 +1,27 @@
 FROM python:3.11-slim
 
+# Create a non-root user with UID in the allowed range (10001+ for Choreo)
+RUN adduser --disabled-password --gecos '' --uid 10001 botuser
+
+# Install system dependencies (customize based on your actual bot needs)
+RUN apt-get update && apt-get install -y ffmpeg libsndfile1 && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies (optional: only if your requirements need them)
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy app files
-COPY . /app
+# Copy files to the container
+COPY . .
 
 # Install Python dependencies
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-# Choreo expects the app to run on port 8080 by default
-ENV PORT 8080
+# Switch to the non-root user (required by Choreo)
+USER 10001
 
-# Expose port (not strictly required by choreo, but good practice)
+# Expose default Choreo port (optional, useful if you run a web server)
 EXPOSE 8080
 
-# Start the Python bot
+# Start the bot (adjust if your entry point is different)
 CMD ["python", "-m", "bot"]
