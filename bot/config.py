@@ -6,7 +6,7 @@ class Telegram:
     OWNER_ID = int(env.get("OWNER_ID", "6897739611"))
     ALLOWED_USER_IDS = env.get("ALLOWED_USER_IDS", "").split()
     BOT_USERNAME = env.get("TELEGRAM_BOT_USERNAME", "HHTGFilezDLBot")
-    BOT_TOKEN = env.get("TELEGRAM_BOT_TOKEN", "7770146776:AAFnkdNxEGZE4VjyjONz7PjuXq79CGo1t1o")
+    BOT_TOKEN = env.get("TELEGRAM_BOT_TOKEN", "")
     CHANNEL_ID = int(env.get("TELEGRAM_CHANNEL_ID", "-1002635785984"))
     SECRET_CODE_LENGTH = int(env.get("SECRET_CODE_LENGTH", 4))
 
